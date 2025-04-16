@@ -13,7 +13,7 @@ export const getProjects = async (req: AuthRequest, res: Response) => {
 
     const projects = await prisma.project.findMany({
       where: {
-        userId: req.user.id
+        ownerId: req.user.id
       },
       orderBy: {
         updatedAt: 'desc'
@@ -39,7 +39,7 @@ export const getProjectById = async (req: AuthRequest, res: Response) => {
     const project = await prisma.project.findFirst({
       where: {
         id,
-        userId: req.user.id // Ensure user can only access their own projects
+        ownerId: req.user.id // Ensure user can only access their own projects
       },
       include: {
         tasks: true // Include related tasks if you have them
@@ -74,8 +74,9 @@ export const createProject = async (req: AuthRequest, res: Response) => {
       data: {
         name,
         description: description || '',
-        userId: req.user.id,
-        status: 'Active'
+        ownerId: req.user.id,
+        startDate: new Date(), // Required by schema
+        status: 'active'
       }
     });
 
@@ -100,7 +101,7 @@ export const updateProject = async (req: AuthRequest, res: Response) => {
     const existingProject = await prisma.project.findFirst({
       where: {
         id,
-        userId: req.user.id
+        ownerId: req.user.id
       }
     });
 
@@ -137,7 +138,7 @@ export const deleteProject = async (req: AuthRequest, res: Response) => {
     const existingProject = await prisma.project.findFirst({
       where: {
         id,
-        userId: req.user.id
+        ownerId: req.user.id
       }
     });
 

@@ -14,7 +14,7 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
     const tasks = await prisma.task.findMany({
       where: {
         project: {
-          userId: req.user.id
+          ownerId: req.user.id
         }
       },
       include: {
@@ -50,7 +50,7 @@ export const getTasksByProject = async (req: AuthRequest, res: Response) => {
     const project = await prisma.project.findFirst({
       where: {
         id: projectId,
-        userId: req.user.id
+        ownerId: req.user.id
       }
     });
 
@@ -87,7 +87,7 @@ export const getTaskById = async (req: AuthRequest, res: Response) => {
       where: {
         id,
         project: {
-          userId: req.user.id
+          ownerId: req.user.id
         }
       },
       include: {
@@ -132,7 +132,7 @@ export const createTask = async (req: AuthRequest, res: Response) => {
     const project = await prisma.project.findFirst({
       where: {
         id: projectId,
-        userId: req.user.id
+        ownerId: req.user.id
       }
     });
 
@@ -144,7 +144,7 @@ export const createTask = async (req: AuthRequest, res: Response) => {
       data: {
         title,
         description: description || '',
-        status: status || 'Todo',
+        status: status || 'todo',
         projectId
       }
     });
@@ -171,7 +171,7 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
       where: {
         id,
         project: {
-          userId: req.user.id
+          ownerId: req.user.id
         }
       }
     });
@@ -185,7 +185,7 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
       const project = await prisma.project.findFirst({
         where: {
           id: projectId,
-          userId: req.user.id
+          ownerId: req.user.id
         }
       });
 
@@ -225,7 +225,7 @@ export const deleteTask = async (req: AuthRequest, res: Response) => {
       where: {
         id,
         project: {
-          userId: req.user.id
+          ownerId: req.user.id
         }
       }
     });

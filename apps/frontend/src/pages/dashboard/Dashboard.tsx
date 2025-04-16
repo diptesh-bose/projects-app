@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import axios from 'axios';
+import api from '../../services/authService';
 import { config } from '../../config';
 
 interface Project {
@@ -24,13 +24,8 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get(config.projectEndpoints.list, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        setProjects(response.data);
+        const response = await api.get('/projects');
+        setProjects(response.data.projects);
         setError(null);
         setLoading(false);
       } catch (err: any) {
