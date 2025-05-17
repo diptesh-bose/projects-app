@@ -125,6 +125,24 @@ The frontend will run on `http://localhost:5173`.
 
 ---
 
+### 7. Application Screenshots
+
+Below are screenshots of the application to help you understand its functionality and user interface.
+
+#### Landing Page
+![Landing Page](Images/landing.png)
+
+#### My Projects Page
+![My Projects](Images/myprojects.png)
+
+#### Add New Project Page
+![Add New Project](Images/newprojects.png)
+
+#### Add Tasks Page
+![Add Tasks](Images/addtasks.png)
+
+---
+
 ## Running with Docker
 
 If you prefer to use Docker, you can run the application using Docker Compose:
